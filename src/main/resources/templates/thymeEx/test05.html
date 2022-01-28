@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<h3>링크 처리</h3>
+<li> <a th:href="@{/templates/thymeEx/test01}">1페이지 이동</a></li>
+<li> <a th:href="@{https://www.thymeleaf.org}">타임리프 공식 페이지</a></li>
+<li> <a th:href="@{/templates/thymeEx/test06(param1 = '인수데이터1', param2='인수데이터2')}">파라미터 전달</a></li>
+
+</body>
+</html>
