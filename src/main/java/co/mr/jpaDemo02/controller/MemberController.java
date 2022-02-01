@@ -32,9 +32,9 @@ public class MemberController {
     public String memberForm(@Valid MemberFormDto memberFormDto,
                              BindingResult bindingResult, Model model) {
         // bindingResult.hasErrors()호출하여 에러가 있으면 가입페이지로 이동
-        System.out.println("binddingResult 결과 : " +bindingResult.hasErrors());
+        System.out.println("binddingResult 결과 : " + bindingResult.hasErrors());
         if (bindingResult.hasErrors()) {
-            return "member/memberForm";
+            return "/member/memberForm";
         }
 
         try {
@@ -43,10 +43,21 @@ public class MemberController {
         } catch (IllegalStateException e) {
             // 에러 메시지를 뷰로 전달
             model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberForm";
+            return "/member/memberForm";
         }
 
         // 가입 성공하면 home으로
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginMember() {
+        return "/member/memberLoginForm";
+    }
+
+    @GetMapping("/login/error")
+    public String loginError(Model model) {
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인하세요.");
+        return "/member/memberLoginForm";
     }
 }
