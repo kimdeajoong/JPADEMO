@@ -1,22 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <!--spring security 태그를 사용하기 위해 네임스페이스추가-->
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:fragment="header">
             <a class="navbar-brand" href="#">Spring Study</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <th:block th:with="currentUrl=${#httpServletRequest.requestURI}">
+                    <li class="nav-item" th:classappend="${currentUrl == '/'}? 'active'">
+                        <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/item/new}"
+                        sec:authorize="hasAnyAuthority('ROLE_ADMIN')">상품등록</a> <!--관리자 계정으로 로그인한 경우만 보여줌-->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/members/new}">회원가입</a>
+                        <a class="nav-link" th:href="@{/admin/items}"
+                           sec:authorize="hasAnyAuthority('ROLE_ADMIN')">상품관리</a><!--관리자 계정으로 로그인한 경우만 보여줌-->
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/members/login}">로그인</a>
+                        <a class="nav-link" th:href="@{/cart}"
+                           sec:authorize="isAuthenticated()">장바구니</a> <!--로그인 했을 경우만 보여줌-->
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/orders}"
+                           sec:authorize="isAuthenticated()">구매이력</a> <!--로그인 했을 경우만 보여줌-->
+                    </li>
+
+
+                    <li class="nav-item" th:classappend="${currentUrl == '/members/login'}? 'active'">
+                        <a class="nav-link" th:href="@{/members/login}"
+                        sec:authorize="isAnonymous()">로그인</a> <!-- 로그인하지 않은 상태이면 로그인을 보여줌 -->
+                    </li>
+
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" th:href="@{/members/new}"-->
+<!--                           sec:authorize="isAnonymous()">회원가입</a>-->
+<!--                    </li>-->
+
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" th:href="@{/members/new}">회원가입</a>-->
+<!--                    </li>-->
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/members/logout}"
+                           sec:authorize="isAuthenticated()">로그아웃</a> <!--로그인한 상태이면 로그아웃을 보여줌-->
                     </li>
 <!--                    <li class="nav-item">-->
 <!--                        <a class="nav-link disabled">Disabled</a>-->
@@ -29,6 +62,7 @@
 <!--                            <a class="dropdown-item" href="#">Something else here</a>-->
 <!--                        </div>-->
 <!--                    </li>-->
+                    </th:block>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
