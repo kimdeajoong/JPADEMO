@@ -19,7 +19,7 @@ public class MemberFormDto {
     private String email;
 
     @NotEmpty(message = "* 필수 입력값")
-    @Length(min=8, max=20, message = "8자이상, 20자 이하로 입력하세요.")
+    @Length(min=4, max=20, message = "8자이상, 20자 이하로 입력하세요.")
     private String password;
 
     @NotEmpty(message = "* 필수 입력값")
