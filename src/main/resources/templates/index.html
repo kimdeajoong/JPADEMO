@@ -18,16 +18,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:margin="http://www.w3.org/1999/xhtml"
+      xmlns:display="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/layout1}">
 
 <div layout:fragment="content">
-    <main role="main" class="container">
+    <main role="main" class="container" >
 
         <div class="starter-template">
             <h1>메인 페이지</h1>
             <p class="lead">스프링 테스트</p>
+            <img class="img" src="https://t1.daumcdn.net/cfile/tistory/2261BF4552CBB1901E"
+                 alt="대전시 이미지"  border="0"  width="1000px" height="450px">
         </div>
+
 
     </main>
 </div>

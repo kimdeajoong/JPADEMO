@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!--<div class="container">-->
+<!--    <a th:href="@{/}">메인페이지로 가기</a>-->
+
+<div layout:fragment="content">
+    <div class="starter-template">
+        <h2>공연정보</h2>
+        <p class="lead">스프링 테스트</p>
+    </div>
+
+    <div class="d-flex">
+        <span th:text="'page 번호 : '+ ${pageNo} + ' , '"></span>
+        <span class="mr-auto" th:text="'전체건수 : '+ ${totalCount}"></span>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <th>장소명</th>
+        <th>세부장소</th>
+        <th>행사 대상연령대</th>
+        <th>테마명</th>
+        <th>행사명</th>
+        <th>행사시작일</th>
+        <th>행사종료일</th>
+        <th>주최기관</th>
+        <th>홈페이지주소</th>
+        <th>행사일련번호</th>
+        <th>주차장보유여부</th>
+
+        </thead>
+        <tr th:each="eventInfo : ${eventInfos}">
+            <td th:text="${eventInfo.getPlaceCdNm()}"></td>  <!--장소명-->
+            <td th:text="${eventInfo.getPlaceDetail()}"></td> <!-- 세부장소-->
+            <td th:text="${eventInfo.getTargetCdNm()}"></td> <!--행사 대상연령대-->
+            <td th:text="${eventInfo.getThemeCdNm()}"></td> <!--테마명-->
+            <td th:text="${eventInfo.getTitle()}"></td> <!--행사명-->
+            <td th:text="${eventInfo.getBeginDt()}"></td> <!-- 행사시작일-->
+            <td th:text="${eventInfo.getEndDt()}"></td> <!-- 행사종료일-->
+            <td th:text="${eventInfo.getManagementCdNm()}"></td> <!--행사주관값-->
+            <td th:text="${eventInfo.getHomepageAdd()}"></td> <!--홈페이지주소-->
+            <td th:text="${eventInfo.getEventSeq()}"></td> <!--행사일련번호-->
+
+            <td th:if="${eventInfo.getPrpleHoldYn() == 'Y'}" th:text="보유"></td>
+            <td th:if="${eventInfo.getPrpleHoldYn() == 'N'}" th:text="미보유"></td>
+
+        </tr>
+    </table>
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${prevPage <=0}?'disabled':''">
+            <a class="page-link" th:href="@{/apiExplorer(pageNo = ${prevPage})}">이전</a>
+        </li>
+
+        <li class="page-item" th:each="page : ${#numbers.sequence(blockStart, blockEnd)}" th:classappend="${pageNo eq page}?'active':''" >
+            <a class="page-link" th:href="@{/apiExplorer(pageNo = ${page})}" th:text="${page}"></a>
+        </li>
+
+        <li class="page-item" th:classappend="${blockEnd >= totalPages}?'disabled':''">
+            <a class="page-link" th:href="@{/apiExplorer(pageNo = ${nextPage})}">다음</a>
+        </li>
+    </ul>
+
+
+</div>
+
+</html>
